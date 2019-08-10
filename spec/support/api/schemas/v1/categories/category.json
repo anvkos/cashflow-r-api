@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "required": [
+    "category"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "category": {
+      "type": "object",
+      "required": [
+        "id",
+        "name"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
