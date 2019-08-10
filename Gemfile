@@ -29,6 +29,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rack-cors'
 gem 'devise', '~> 4.6'
 gem 'devise-jwt', '~> 0.6'
+gem 'active_model_serializers'
 
 gem 'dotenv-rails', groups: [:development, :test]
 
