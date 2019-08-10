@@ -38,9 +38,20 @@ module CashflowApi
                        view_spec: false,
                        helper_specs: false,
                        routing_specs: false,
-                       request_specs: false,
+                       request_specs: true,
                        controller_spec: true
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
+    end
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+
+        resource '*',
+                 headers: :any,
+                 expose: ["Authorization"],
+                 methods: %i[get post put patch delete options head]
+      end
     end
   end
 end
