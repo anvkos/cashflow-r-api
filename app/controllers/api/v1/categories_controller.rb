@@ -11,7 +11,7 @@ module Api
         if @category.persisted?
           render json: @category, status: :created, adapter: :json
         else
-          render json: { error: 'error create', error_messages: @category.errors.messages }, status: :unprocessable_entity
+          respond_with_validation_error(@category)
         end
       end
 
