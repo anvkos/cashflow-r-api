@@ -29,16 +29,15 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rack-cors'
 gem 'devise', '~> 4.6'
 gem 'devise-jwt', '~> 0.6'
-gem 'active_model_serializers'
-
-gem 'dotenv-rails', groups: [:development, :test]
+gem "active_model_serializers", "~> 0.10.10"
 
 group :development, :test do
+  gem "dotenv-rails", "~> 2.7"
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 3.8'
-  gem 'factory_bot_rails'
-  gem 'faker'
+  gem "factory_bot_rails", "~> 5.0"
+  gem "faker", "~> 2.1"
 end
 
 group :development do
@@ -49,12 +48,12 @@ group :development do
 end
 
 group :test do
-  gem 'simplecov', :require => false
-  gem 'shoulda-matchers'
-  gem 'rails-controller-testing'
-  gem 'database_cleaner'
-  gem 'json_spec'
-  gem 'json-schema'
+  gem "simplecov", "~> 0.17.0", :require => false
+  gem "shoulda-matchers", "~> 4.1"
+  gem "rails-controller-testing", "~> 1.0"
+  gem "database_cleaner", "~> 1.7"
+  gem "json_spec", "~> 1.1"
+  gem "json-schema", "~> 2.8"
 end
 
 
