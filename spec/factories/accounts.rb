@@ -6,7 +6,7 @@ FactoryBot.define do
     amount { 1000 }
   end
 
-  factory :invalid_account do
+  factory :invalid_account, class: 'Account' do
     user { nil }
     currency { nil }
     name { nil }

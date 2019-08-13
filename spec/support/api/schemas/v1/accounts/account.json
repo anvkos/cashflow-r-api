@@ -1,0 +1,58 @@
+{
+  "type": "object",
+  "required": [
+    "account"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "account": {
+      "type": "object",
+      "required": [
+        "id",
+        "currency",
+        "name",
+        "amount",
+        "created_at",
+        "updated_at"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "currency": {
+          "type": "object",
+          "required": [
+            "id",
+            "code",
+            "symbol"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "code": {
+              "type": "string"
+            },
+            "symbol": {
+              "type": "string"
+            }
+          }
+        },
+        "name": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "integer"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
