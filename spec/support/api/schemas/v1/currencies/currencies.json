@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "required": [
+    "currencies"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "currencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "code",
+          "symbol"
+        ]
+      },
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "code": {
+          "type": "string"
+        },
+        "symbol": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
