@@ -12,8 +12,8 @@ FactoryBot.define do
     user { nil }
     category { nil }
     account { nil }
-    amount { 1 }
-    description { "MyString" }
-    payment_at { "2019-08-14 14:50:28" }
+    amount { nil }
+    description { nil }
+    payment_at { nil }
   end
 end
