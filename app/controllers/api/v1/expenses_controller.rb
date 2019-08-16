@@ -4,12 +4,10 @@ module Api
       before_action :set_expense, only: [:update]
 
       def create
-        @expense = current_user.expenses.create(expense_params)
-        if @expense.persisted?
-          render json: @expense, status: :created, adapter: :json
-        else
-          respond_with_validation_error(@expense)
-        end
+        service = CreateExpenseService.new
+        service.on(:expense_created) { |expense| render json: expense, status: :created, adapter: :json }
+        service.on(:expense_error) { |expense| respond_with_validation_error(expense) }
+        @expense = service.call(current_user, expense_params)
       end
 
       def update
