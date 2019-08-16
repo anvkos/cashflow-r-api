@@ -30,6 +30,7 @@ gem 'rack-cors'
 gem 'devise', '~> 4.6'
 gem 'devise-jwt', '~> 0.6'
 gem "active_model_serializers", "~> 0.10.10"
+gem "wisper", "~> 2.0"
 
 group :development, :test do
   gem "dotenv-rails", "~> 2.7"
@@ -54,6 +55,7 @@ group :test do
   gem "database_cleaner", "~> 1.7"
   gem "json_spec", "~> 1.1"
   gem "json-schema", "~> 2.8"
+  gem "wisper-rspec", "~> 1.1", :require => false
 end
 
 
