@@ -3,6 +3,11 @@ module Api
     class ExpensesController < Api::V1::BaseController
       before_action :set_expense, only: [:update]
 
+      def index
+        @expenses = Expense.all
+        render json: @expenses, each_serializer: ExpenseSerializer, adapter: :json
+      end
+
       def create
         service = CreateExpenseService.new
         service.on(:expense_created) { |expense| render json: expense, status: :created, adapter: :json }
