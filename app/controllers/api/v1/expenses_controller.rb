@@ -4,7 +4,7 @@ module Api
       before_action :set_expense, only: [:update]
 
       def index
-        @expenses = Expense.all
+        @expenses = current_user.expenses.where(payment_at: search_params[:start_date].to_date..search_params[:end_date].to_date)
         render json: @expenses, each_serializer: ExpenseSerializer, adapter: :json
       end
 
@@ -30,6 +30,12 @@ module Api
 
       def set_expense
         @expense = Expense.find(params[:id])
+      end
+
+      def search_params
+        params[:start_date] = Time.now.beginning_of_month.to_s unless params[:start_date].present?
+        params[:end_date] = Time.now.end_of_month.to_s unless params[:end_date].present?
+        params.permit(:start_date, :end_date)
       end
     end
   end
