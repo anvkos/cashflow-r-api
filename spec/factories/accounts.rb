@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :account do
     user
     currency
-    name { 'Visa green' }
+    sequence(:name) { |n| "Card #{n}" }
     amount { 1000 }
   end
 

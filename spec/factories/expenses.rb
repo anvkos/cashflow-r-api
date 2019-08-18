@@ -3,8 +3,8 @@ FactoryBot.define do
     user
     category
     account
-    amount { 1000 }
-    description { "MyString" }
+    sequence(:amount) { |n| 1000 * n }
+    sequence(:description) { |n| "Comment #{n}" }
     payment_at { Time.now }
   end
 
