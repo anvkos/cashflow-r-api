@@ -11,11 +11,10 @@ module Api
       end
 
       def update
-        if @expense.update(expense_params)
-          render json: @expense, adapter: :json
-        else
-          respond_with_validation_error(@expense)
-        end
+        service = UpdateExpenseService.new
+        service.on(:expense_updated) { |expense| render json: expense, adapter: :json }
+        service.on(:expense_error) { |expense| respond_with_validation_error(expense) }
+        @expense = service.call(@expense, expense_params)
       end
 
       private

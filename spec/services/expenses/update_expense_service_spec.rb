@@ -6,7 +6,7 @@ RSpec.describe UpdateExpenseService do
     let!(:user) { create(:user) }
     let!(:category) { create(:category) }
     let!(:account) { create(:account, user: user) }
-    let!(:expense) { create(:expense, user: user) }
+    let!(:expense) { create(:expense, user: user, account: account) }
 
     context 'when expense is updated' do
       let(:params) do
@@ -35,7 +35,7 @@ RSpec.describe UpdateExpenseService do
       end
     end
 
-    context 'when amount changes' do
+    context 'when expense amount changes' do
       let(:diff_amount) { 5000 }
 
       it 'user account decreases' do
@@ -54,6 +54,28 @@ RSpec.describe UpdateExpenseService do
         prev_amount = expense.account.amount
         service.call(expense, params)
         expect(expense.account.reload.amount).to eq prev_amount - diff_amount
+      end
+
+      context 'when expense account changes' do
+        let!(:another_account) { create(:account, user: user) }
+        let(:params) do
+          {
+            account_id: another_account.id
+          }
+        end
+
+        it 'previous expense account increases' do
+          prev_account_amount = expense.account.amount
+          prev_expense_amount = expense.amount
+          service.call(expense, params)
+          expect(account.reload.amount).to eq prev_account_amount + prev_expense_amount
+        end
+
+        it 'user account decreases' do
+          prev_amount = another_account.amount
+          service.call(expense, params)
+          expect(another_account.reload.amount).to eq prev_amount - expense.amount
+        end
       end
     end
 
