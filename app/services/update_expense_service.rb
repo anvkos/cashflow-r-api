@@ -10,9 +10,9 @@ class UpdateExpenseService
 
     if original_account.id != expense.account.id
       original_account.update(amount: original_account.amount + original_amount)
-      update_current_account(expense.account, expense.amount)
+      update_account(expense.account, expense.amount)
     elsif expense.amount != original_amount
-      update_current_account(expense.account, params[:amount].to_i - original_amount)
+      update_account(expense.account, params[:amount].to_i - original_amount)
     end
 
     publish(:expense_updated, expense)
@@ -21,11 +21,11 @@ class UpdateExpenseService
 
   protected
 
-  def update_current_account(account, diff_amount)
-    if diff_amount.positive?
-      account.update(amount: account.amount - diff_amount)
+  def update_account(account, amount)
+    if amount.positive?
+      account.update(amount: account.amount - amount)
     else
-      account.update(amount: account.amount + diff_amount.abs)
+      account.update(amount: account.amount + amount.abs)
     end
   end
 
