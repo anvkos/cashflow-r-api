@@ -12,10 +12,11 @@ RSpec.describe 'Accounts API' do
           name: 'Visa green',
           amount: 1_000_000
         },
-        format: :json }
+        format: :json
+      }
     end
 
-    context 'unauthorized' do
+    context 'when user is not authenticated' do
       it 'returns 401 status' do
         patch "/api/v1/accounts/#{account.id}", params: params
         expect(response.status).to eq 401
@@ -31,10 +32,10 @@ RSpec.describe 'Accounts API' do
       end
     end
 
-    context 'authorized' do
+    context 'when user authenticated' do
       let!(:token) { auth_user(user) }
 
-      context 'user account' do
+      context 'user changes his account' do
         context 'with valid attributes' do
           before { patch_with_token "/api/v1/accounts/#{account.id}", params, token }
 
@@ -65,9 +66,9 @@ RSpec.describe 'Accounts API' do
 
           it 'does not change account attributes' do
             account.reload
-            expect(account.currency_id).to_not eq invalid_params[:account][:currency_id]
-            expect(account.name).to_not eq invalid_params[:account][:name]
-            expect(account.amount).to_not eq invalid_params[:account][:amount]
+            expect(account.currency_id).not_to eq invalid_params[:account][:currency_id]
+            expect(account.name).not_to eq invalid_params[:account][:name]
+            expect(account.amount).not_to eq invalid_params[:account][:amount]
           end
         end
       end

@@ -5,7 +5,7 @@ RSpec.describe 'Accounts API' do
     let!(:user) { create(:user) }
     let!(:accounts) { create_list(:account, 2, user: user) }
 
-    context 'unauthorized' do
+    context 'when user is not authenticated' do
       it 'returns 401 status' do
         get '/api/v1/accounts', params: { format: :json }
         expect(response.status).to eq 401
@@ -17,7 +17,7 @@ RSpec.describe 'Accounts API' do
       end
     end
 
-    context 'authorized' do
+    context 'when user authenticated' do
       let!(:token) { auth_user(user) }
 
       it "returns http success" do
@@ -35,7 +35,7 @@ RSpec.describe 'Accounts API' do
         expect(response).to match_response_schema('v1/accounts/accounts')
       end
 
-      context 'user accounts' do
+      context 'when user sees his accounts' do
         let!(:another_user) { create(:user) }
         let!(:another_accounts) { create_list(:account, 2, user: another_user) }
 
@@ -52,7 +52,7 @@ RSpec.describe 'Accounts API' do
           another_account_ids = another_accounts.map(&:id)
           data = JSON.parse(response.body)
           data_ids = data["accounts"].map { |item| item["id"] }
-          expect(data_ids).to_not include(*another_account_ids)
+          expect(data_ids).not_to include(*another_account_ids)
         end
       end
     end

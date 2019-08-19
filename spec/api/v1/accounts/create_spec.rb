@@ -11,10 +11,11 @@ RSpec.describe 'Accounts API' do
           name: 'Visa green',
           amount: 1_000_000
         },
-        format: :json }
+        format: :json
+      }
     end
 
-    context 'unauthorized' do
+    context 'when user is not authenticated' do
       it 'returns 401 status' do
         post '/api/v1/accounts', params: params
         expect(response.status).to eq 401
@@ -30,7 +31,7 @@ RSpec.describe 'Accounts API' do
       end
     end
 
-    context 'authorized' do
+    context 'when user authenticated' do
       let!(:token) { auth_user(user) }
 
       context 'with valid attributes' do
