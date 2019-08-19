@@ -1,7 +1,15 @@
 module Api
   module V1
     class BaseController < ApplicationController
+      include Pundit
       before_action :authenticate_user!
+      rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+      private
+
+      def user_not_authorized
+        render_error(:forbidden, message: 'This action is unauthorized.')
+      end
 
       def render_error(status, resource = nil)
         render status: status,

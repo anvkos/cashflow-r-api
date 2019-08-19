@@ -18,7 +18,7 @@ RSpec.describe 'Expenses API' do
       }
     end
 
-    context 'when user unauthorized' do
+    context 'when user is not authenticated' do
       it 'returns 401 status' do
         patch "/api/v1/expenses/#{expense.id}", params: params
         expect(response.status).to eq 401
@@ -34,7 +34,7 @@ RSpec.describe 'Expenses API' do
       end
     end
 
-    context 'when user authorized' do
+    context 'when user authenticated' do
       let!(:token) { auth_user(user) }
 
       context 'when the user changes his expense' do
@@ -76,7 +76,21 @@ RSpec.describe 'Expenses API' do
         end
       end
 
-      it 'does not update expense another user'
+      context 'when user tries update another user expense' do
+        let(:other_expense) { create(:expense) }
+
+        it 'returns 403 status code' do
+          patch_with_token "/api/v1/expenses/#{other_expense.id}", params, token
+          expect(response.status).to eq 403
+        end
+
+        it 'does not update expense another user' do
+          patch_with_token "/api/v1/expenses/#{other_expense.id}", params, token
+          %w[account_id amount description payment_at].each do |attribute|
+            expect(other_expense.send(attribute.to_sym)).not_to eq params[:expense][attribute.to_sym]
+          end
+        end
+      end
     end
   end
 end

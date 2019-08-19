@@ -16,6 +16,7 @@ module Api
       end
 
       def update
+        authorize @expense
         service = UpdateExpenseService.new
         service.on(:expense_updated) { |expense| render json: expense, adapter: :json }
         service.on(:expense_error) { |expense| respond_with_validation_error(expense) }
