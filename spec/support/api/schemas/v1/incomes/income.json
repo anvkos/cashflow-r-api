@@ -1,0 +1,104 @@
+{
+  "type": "object",
+  "required": [
+    "income"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "income": {
+      "type": "object",
+      "required": [
+        "id",
+        "category",
+        "account",
+        "currency",
+        "amount",
+        "description",
+        "payment_at",
+        "created_at",
+        "updated_at"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "category": {
+          "type": "object",
+          "required": [
+            "id",
+            "name"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        "account": {
+          "type": "object",
+          "required": [
+            "id",
+            "currency_id",
+            "name",
+            "amount"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "currency_id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "amount": {
+              "type": "integer"
+            }
+          }
+        },
+        "currency": {
+          "type": "object",
+          "required": [
+            "id",
+            "code",
+            "symbol"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "code": {
+              "type": "string"
+            },
+            "symbol": {
+              "type": "string"
+            }
+          }
+        },
+        "amount": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        },
+        "payment_at": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
