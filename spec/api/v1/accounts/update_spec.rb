@@ -35,7 +35,7 @@ RSpec.describe 'Accounts API' do
     context 'when user authenticated' do
       let!(:token) { auth_user(user) }
 
-      context 'user changes his account' do
+      context 'when user changes his account' do
         context 'with valid attributes' do
           before { patch_with_token "/api/v1/accounts/#{account.id}", params, token }
 
