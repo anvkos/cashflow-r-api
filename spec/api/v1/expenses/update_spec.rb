@@ -87,7 +87,7 @@ RSpec.describe 'Expenses API' do
         it 'does not update expense another user' do
           patch_with_token "/api/v1/expenses/#{other_expense.id}", params, token
           %w[account_id amount description payment_at].each do |attribute|
-            expect(other_expense.send(attribute.to_sym)).not_to eq params[:expense][attribute.to_sym]
+            expect(other_expense.reload.send(attribute.to_sym)).not_to eq params[:expense][attribute.to_sym]
           end
         end
       end
