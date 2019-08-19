@@ -12,7 +12,7 @@ RSpec.describe 'POST /login', type: :request do
     }
   end
 
-  context 'login user' do
+  context 'when a user is logging' do
     before { post url, params: params }
 
     it 'returns 200 status code' do
@@ -33,7 +33,7 @@ RSpec.describe 'POST /login', type: :request do
     end
   end
 
-  context 'login params are incorrect' do
+  context 'when login params are incorrect' do
     before { post url }
 
     it 'returns unathorized status code' do

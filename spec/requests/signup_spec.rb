@@ -4,12 +4,12 @@ RSpec.describe 'POST /signup', type: :request do
   let(:url) { '/signup' }
   let!(:params) do
     {
-        email: 'user@example.com',
-        password: 'password'
+      email: 'user@example.com',
+      password: 'password'
     }
   end
 
-  context 'registartion new user' do
+  context 'when a new user is registered' do
     before { post url, params: params }
 
     it 'returns 201 status code' do
@@ -21,7 +21,7 @@ RSpec.describe 'POST /signup', type: :request do
     end
   end
 
-  context 'user already exists' do
+  context 'when user already exists' do
     before do
       create(:user, email: params[:email])
       post url, params: params
