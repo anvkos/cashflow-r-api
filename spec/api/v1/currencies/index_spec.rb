@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe 'Currencies API' do
   describe "GET /api/v1/currencies" do
-    let!(:currencies) { create_list(:currency, 2) }
+    before { create_list(:currency, 2) }
 
-    context 'unauthorized' do
+    context 'when user is not authenticated' do
       it 'returns 401 status' do
         get '/api/v1/currencies', params: { format: :json }
         expect(response.status).to eq 401
@@ -16,7 +16,7 @@ RSpec.describe 'Currencies API' do
       end
     end
 
-    context 'authorized' do
+    context 'when user authenticated' do
       let!(:user) { create(:user) }
       let!(:token) { auth_user(user) }
 

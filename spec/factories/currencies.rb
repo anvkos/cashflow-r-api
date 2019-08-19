@@ -7,19 +7,19 @@ FactoryBot.define do
     trait :rub do
       name { 'Российский рубль' }
       code { 'RUB' }
-      symbol { 'руб.'}
+      symbol { 'руб.' }
     end
 
     trait :usd do
       name { 'United States dollar' }
       code { 'USD' }
-      symbol { '$'}
+      symbol { '$' }
     end
 
     trait :euro do
       name { 'Euro' }
       code { 'EUR' }
-      symbol { '€'}
+      symbol { '€' }
     end
   end
 end
