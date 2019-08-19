@@ -4,10 +4,9 @@ RSpec.describe 'Categories API' do
   describe "POST /categories" do
     let!(:params) { { category: attributes_for(:category), format: :json } }
     let!(:user) { create(:user) }
-    let!(:url) { '/api/v1/categories' }
     let!(:token) { auth_user(user) }
 
-    context 'unauthorized' do
+    context 'when user is not authenticated' do
       it 'returns 401 status' do
         post '/api/v1/categories', params: params
         expect(response.status).to eq 401
@@ -23,7 +22,7 @@ RSpec.describe 'Categories API' do
       end
     end
 
-    context 'authorized' do
+    context 'when user authenticated' do
       context 'with valid attributes' do
         it 'returns 201 status code' do
           post_with_token '/api/v1/categories', params, token

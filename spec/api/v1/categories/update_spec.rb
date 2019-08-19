@@ -6,7 +6,7 @@ RSpec.describe 'Categories API' do
     let!(:user) { create(:user) }
     let!(:updated_params) { { category: { name: 'updated name' }, format: :json } }
 
-    context 'unauthorized' do
+    context 'when user is not authenticated' do
       it 'returns 401 status' do
         patch "/api/v1/categories/#{category.id}", params: updated_params
         expect(response.status).to eq 401
@@ -17,7 +17,7 @@ RSpec.describe 'Categories API' do
       end
     end
 
-    context 'authorized' do
+    context 'when user authenticated' do
       let!(:token) { auth_user(user) }
 
       context 'with valid attributes' do
@@ -48,7 +48,7 @@ RSpec.describe 'Categories API' do
 
         it 'does not change category attributes' do
           category.reload
-          expect(category.name).to_not eq updated_params[:category][:name]
+          expect(category.name).not_to eq updated_params[:category][:name]
         end
       end
     end
