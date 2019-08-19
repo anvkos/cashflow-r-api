@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_14_075028) do
+ActiveRecord::Schema.define(version: 2019_08_19_110231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,21 @@ ActiveRecord::Schema.define(version: 2019_08_14_075028) do
     t.index ["user_id"], name: "index_expenses_on_user_id"
   end
 
+  create_table "incomes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "category_id"
+    t.bigint "account_id"
+    t.integer "amount", null: false
+    t.string "description"
+    t.datetime "payment_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_incomes_on_account_id"
+    t.index ["category_id"], name: "index_incomes_on_category_id"
+    t.index ["user_id", "payment_at"], name: "index_incomes_on_user_id_and_payment_at"
+    t.index ["user_id"], name: "index_incomes_on_user_id"
+  end
+
   create_table "jwt_blacklists", force: :cascade do |t|
     t.string "jti"
     t.datetime "exp"
@@ -80,4 +95,7 @@ ActiveRecord::Schema.define(version: 2019_08_14_075028) do
   add_foreign_key "expenses", "accounts"
   add_foreign_key "expenses", "categories"
   add_foreign_key "expenses", "users"
+  add_foreign_key "incomes", "accounts"
+  add_foreign_key "incomes", "categories"
+  add_foreign_key "incomes", "users"
 end
