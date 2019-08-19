@@ -4,7 +4,7 @@ RSpec.describe 'Accounts API' do
   describe "PATCH /accounts/{:id}" do
     let!(:user) { create(:user) }
     let!(:currency) { create(:currency) }
-    let!(:account) { create(:account, currency: currency) }
+    let!(:account) { create(:account, user: user, currency: currency) }
     let!(:params) do
       {
         account: {
@@ -73,7 +73,21 @@ RSpec.describe 'Accounts API' do
         end
       end
 
-      it 'does not update account another user'
+      context 'when user tries to update another user account' do
+        let(:other_account) { create(:account) }
+
+        it 'returns 403 status code' do
+          patch_with_token "/api/v1/accounts/#{other_account.id}", params, token
+          expect(response.status).to eq 403
+        end
+
+        it 'does not update expense another user' do
+          patch_with_token "/api/v1/accounts/#{other_account.id}", params, token
+          %w[currency_id name amount].each do |attribute|
+            expect(other_account.reload.send(attribute.to_sym)).not_to eq params[:account][attribute.to_sym]
+          end
+        end
+      end
     end
   end
 end

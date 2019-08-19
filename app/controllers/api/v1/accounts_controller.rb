@@ -18,6 +18,7 @@ module Api
       end
 
       def update
+        authorize @account
         if @account.update(account_params)
           render json: @account, adapter: :json
         else
