@@ -45,3 +45,6 @@ Style/StringLiterals:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+RSpec/NestedGroups:
+  Max: 4
