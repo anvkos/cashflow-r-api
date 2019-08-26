@@ -4,7 +4,8 @@ module Api
       before_action :set_expense, only: [:update]
 
       def index
-        @expenses = current_user.expenses.where(payment_at: search_params[:start_date].to_date..search_params[:end_date].to_date)
+        @expenses = current_user.expenses.includes(:category, account: [:currency])
+                                .where(payment_at: search_params[:start_date].to_date..search_params[:end_date].to_date)
         render json: @expenses, each_serializer: ExpenseSerializer, adapter: :json
       end
 

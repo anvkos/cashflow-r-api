@@ -4,7 +4,8 @@ module Api
       before_action :set_income, only: [:update]
 
       def index
-        @incomes = current_user.incomes.latest.page(page_params[:page]).per(page_params[:per_page])
+        @incomes = current_user.incomes.includes(:category, account: [:currency])
+                               .latest.page(page_params[:page]).per(page_params[:per_page])
         render json: @incomes, each_serializer: IncomeSerializer, adapter: :json, meta: pagination_meta(@incomes)
       end
 

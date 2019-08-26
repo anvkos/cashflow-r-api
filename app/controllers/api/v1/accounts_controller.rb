@@ -4,7 +4,7 @@ module Api
       before_action :set_account, only: [:update]
 
       def index
-        @accounts = current_user.accounts
+        @accounts = current_user.accounts.includes(:currency)
         render json: @accounts, each_serializer: AccountSerializer, adapter: :json
       end
 
