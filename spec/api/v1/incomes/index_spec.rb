@@ -4,7 +4,7 @@ RSpec.describe 'Incomes API' do
   describe "GET /api/v1/incomes" do
     let!(:user) { create(:user) }
 
-    before { create_list(:income, 2, user: user) }
+    let!(:incomes) { create_list(:income, 2, user: user) }
 
     context 'when user unauthorized' do
       it 'returns 401 status' do
@@ -42,6 +42,14 @@ RSpec.describe 'Incomes API' do
         data = JSON.parse(response.body)
         data_ids = data["incomes"].map { |item| item["id"] }
         expect(data_ids).not_to include(*other_income_ids)
+      end
+
+      context 'with default sorting' do
+        it 'returns latest one at first of list' do
+          last_id = incomes.last.id
+          get_with_token('/api/v1/incomes', { format: :json }, token)
+          expect(response.body).to be_json_eql(last_id).at_path("incomes/0/id")
+        end
       end
     end
   end
