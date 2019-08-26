@@ -7,4 +7,6 @@ class Income < ApplicationRecord
   validates :payment_at, presence: true
 
   delegate :currency, to: :account
+
+  scope :latest, -> { order('id DESC') }
 end
