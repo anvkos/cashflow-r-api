@@ -32,6 +32,7 @@ gem 'devise-jwt', '~> 0.6'
 gem "active_model_serializers", "~> 0.10.10"
 gem "wisper", "~> 2.0"
 gem "pundit", "~> 2.1"
+gem "kaminari", "~> 1.1"
 
 group :development, :test do
   gem "dotenv-rails", "~> 2.7"

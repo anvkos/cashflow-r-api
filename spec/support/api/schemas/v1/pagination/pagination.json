@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "required": [
+    "pagination"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "pagination": {
+      "type": "object",
+      "required": [
+        "current_page",
+        "next_page",
+        "prev_page",
+        "total_pages",
+        "total_count"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "current_page": {
+          "type": "integer"
+        },
+        "next_page": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "prev_page": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "total_pages": {
+          "type": "integer"
+        },
+        "total_count": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
