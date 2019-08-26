@@ -1,18 +1,15 @@
-class UpdateExpenseService
-  include Wisper::Publisher
-
+class UpdateExpenseService < ExpenseService
   def call(expense, params)
-    original_account = expense.account
-    original_amount = expense.amount
+    original_expense = expense.dup
 
     expense.update(params)
     return publish_error(expense) unless expense.valid?
 
-    if original_account.id != expense.account.id
-      original_account.update(amount: original_account.amount + original_amount)
-      update_account(expense.account, expense.amount)
-    elsif expense.amount != original_amount
-      update_account(expense.account, params[:amount].to_i - original_amount)
+    if original_expense.account.id != expense.account.id
+      account_service.increase_amount(original_expense, original_expense.amount)
+      account_service.decrease_amount(expense, expense.amount)
+    elsif expense.amount != original_expense.amount
+      update_account(expense, expense.amount - original_expense.amount)
     end
 
     publish(:expense_updated, expense)
@@ -21,16 +18,11 @@ class UpdateExpenseService
 
   protected
 
-  def update_account(account, amount)
+  def update_account(expense, amount)
     if amount.positive?
-      account.update(amount: account.amount - amount)
+      account_service.decrease_amount(expense, amount)
     else
-      account.update(amount: account.amount + amount.abs)
+      account_service.increase_amount(expense, amount.abs)
     end
-  end
-
-  def publish_error(expense)
-    publish(:expense_error, expense)
-    false
   end
 end
