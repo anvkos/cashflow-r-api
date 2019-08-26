@@ -1,0 +1,150 @@
+{
+  "type": "object",
+  "required": [
+    "incomes"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "incomes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "category",
+          "account",
+          "currency",
+          "amount",
+          "description",
+          "payment_at",
+          "created_at",
+          "updated_at"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "category": {
+            "type": "object",
+            "required": [
+              "id",
+              "name"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          },
+          "account": {
+            "type": "object",
+            "required": [
+              "id",
+              "currency_id",
+              "name",
+              "amount"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "currency_id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "amount": {
+                "type": "integer"
+              }
+            }
+          },
+          "currency": {
+            "type": "object",
+            "required": [
+              "id",
+              "code",
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "code": {
+                "type": "string"
+              },
+              "symbol": {
+                "type": "string"
+              }
+            }
+          },
+          "amount": {
+            "type": "integer"
+          },
+          "description": {
+            "type": "string"
+          },
+          "payment_at": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "pagination"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "pagination": {
+          "type": "object",
+          "required": [
+            "current_page",
+            "next_page",
+            "prev_page",
+            "total_pages",
+            "total_count"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "current_page": {
+              "type": "integer"
+            },
+            "next_page": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "prev_page": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "total_pages": {
+              "type": "integer"
+            },
+            "total_count": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -3,6 +3,11 @@ module Api
     class IncomesController < Api::V1::BaseController
       before_action :set_income, only: [:update]
 
+      def index
+        @incomes = current_user.incomes.page(page_params[:page]).per(page_params[:per_page])
+        render json: @incomes, each_serializer: IncomeSerializer, adapter: :json, meta: pagination_meta(@incomes)
+      end
+
       def create
         service = CreateIncomeService.new
         service.on(:income_created) { |income| render json: income, status: :created, adapter: :json }
@@ -22,6 +27,13 @@ module Api
 
       def income_params
         params.require(:income).permit(:category_id, :account_id, :amount, :description, :payment_at)
+      end
+
+      def page_params
+        {
+          page: params[:page] || 1,
+          per_page: params[:per_page] || 25
+        }
       end
 
       def set_income
